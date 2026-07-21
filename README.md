@@ -50,7 +50,7 @@ By default the tool reads mac-apps.json in the current directory. Flags:
 
 Create an inventory file (mac-apps.json):
 
-```json
+```JSON
 {
   "schema_version": 1,
   "packages": [
