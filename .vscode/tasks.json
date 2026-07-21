@@ -1,0 +1,37 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Install Go module dependencies",
+      "type": "shell",
+      "command": "go mod download",
+      "presentation": {
+        "reveal": "silent"
+      },
+      "inAgents": true,
+      "runOptions": {
+        "runOn": "worktreeCreated"
+      }
+    },
+    {
+      "label": "Run unit tests",
+      "type": "shell",
+      "command": "go test ./...",
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "inAgents": true
+    },
+    {
+      "label": "Check gofmt",
+      "type": "shell",
+      "command": "gofmt -l *.go",
+      "presentation": {
+        "reveal": "silent"
+      },
+      "problemMatcher": [],
+      "inAgents": true
+    }
+  ]
+}
