@@ -1,0 +1,488 @@
+{
+    "schema_version": 1,
+    "generated_at": "2026-07-21T00:00:00+02:00",
+    "source": "local macOS application and package-manager inventory",
+    "bootstrap": [
+        {
+            "name": "Homebrew",
+            "check": "brew --version",
+            "notes": "Install Homebrew before processing Homebrew packages."
+        },
+        {
+            "name": "mas",
+            "check": "mas version",
+            "install": "brew install mas",
+            "notes": "Required before processing Mac App Store packages; sign in to the App Store first."
+        }
+    ],
+    "installers": {
+        "homebrew_formula": "brew install <id>",
+        "homebrew_cask": "brew install --cask <id>",
+        "mac_app_store": "mas install <id>",
+        "manual": null
+    },
+    "packages": [
+        {
+            "name": "bitwarden-cli",
+            "type": "cli",
+            "method": "homebrew_formula",
+            "id": "bitwarden-cli"
+        },
+        {
+            "name": "GnuPG",
+            "type": "cli",
+            "method": "homebrew_formula",
+            "id": "gnupg"
+        },
+        {
+            "name": "Go",
+            "type": "cli",
+            "method": "homebrew_formula",
+            "id": "go"
+        },
+        {
+            "name": "htop",
+            "type": "cli",
+            "method": "homebrew_formula",
+            "id": "htop"
+        },
+        {
+            "name": "pinentry-mac",
+            "type": "cli",
+            "method": "homebrew_formula",
+            "id": "pinentry-mac"
+        },
+        {
+            "name": "pipx",
+            "type": "cli",
+            "method": "homebrew_formula",
+            "id": "pipx"
+        },
+        {
+            "name": "BlackHole 16ch",
+            "type": "driver",
+            "method": "homebrew_cask",
+            "id": "blackhole-16ch"
+        },
+        {
+            "name": "Data Jar",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "1453273600",
+            "bundle_id": "dk.simonbs.DataJar",
+            "observed_version": "1.1.4"
+        },
+        {
+            "name": "Bitwarden",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "1352778147",
+            "bundle_id": "com.bitwarden.desktop",
+            "observed_version": "2026.6.1"
+        },
+        {
+            "name": "Boop",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "1518425043",
+            "bundle_id": "com.okatbest.boop",
+            "observed_version": "1.4.0"
+        },
+        {
+            "name": "Font Size Increase",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "6756031354",
+            "bundle_id": "com.stefanvd.fontsizeincreasesafari",
+            "observed_version": "1.1.3"
+        },
+        {
+            "name": "Logic Pro",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "634148309",
+            "bundle_id": "com.apple.logic10",
+            "observed_version": "12.3"
+        },
+        {
+            "name": "Metronome",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "1629209970",
+            "bundle_id": "is.gtmetronome",
+            "observed_version": "1.4"
+        },
+        {
+            "name": "Microsoft Excel",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "462058435",
+            "bundle_id": "com.microsoft.Excel",
+            "observed_version": "16.111"
+        },
+        {
+            "name": "Microsoft OneNote",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "784801555",
+            "bundle_id": "com.microsoft.onenote.mac",
+            "observed_version": "16.111"
+        },
+        {
+            "name": "Microsoft Outlook",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "985367838",
+            "bundle_id": "com.microsoft.Outlook",
+            "observed_version": "16.111"
+        },
+        {
+            "name": "Microsoft PowerPoint",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "462062816",
+            "bundle_id": "com.microsoft.Powerpoint",
+            "observed_version": "16.111"
+        },
+        {
+            "name": "Microsoft To Do",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "1274495053",
+            "bundle_id": "com.microsoft.to-do-mac",
+            "observed_version": "2.177"
+        },
+        {
+            "name": "Microsoft Word",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "462054704",
+            "bundle_id": "com.microsoft.Word",
+            "observed_version": "16.111"
+        },
+        {
+            "name": "OneDrive",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "823766827",
+            "bundle_id": "com.microsoft.OneDrive-mac",
+            "observed_version": "26.113.0614"
+        },
+        {
+            "name": "Slack",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "803453959",
+            "bundle_id": "com.tinyspeck.slackmacgap",
+            "observed_version": "4.50.143"
+        },
+        {
+            "name": "Toggl Track",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "1291898086",
+            "bundle_id": "com.toggl.daneel",
+            "observed_version": "10.16.1"
+        },
+        {
+            "name": "Trello",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "1278508951",
+            "bundle_id": "com.atlassian.trello",
+            "observed_version": "2.16.3"
+        },
+        {
+            "name": "Magnet",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "441258766",
+            "bundle_id": "com.crowdcafe.windowmagnet",
+            "observed_version": "3.0.7"
+        },
+        {
+            "name": "WhatsApp",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "310633997",
+            "bundle_id": "net.whatsapp.WhatsApp",
+            "observed_version": "26.27.74"
+        },
+        {
+            "name": "Xcode",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "497799835",
+            "bundle_id": "com.apple.dt.Xcode",
+            "observed_version": "26.6"
+        },
+        {
+            "name": "Yubico Authenticator",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "1497506650",
+            "bundle_id": "com.yubico.yubioath",
+            "observed_version": "7.4.1"
+        },
+        {
+            "name": "Discord",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "discord",
+            "bundle_id": "com.hnc.Discord",
+            "observed_version": "0.0.372"
+        },
+        {
+            "name": "Docker Desktop",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "docker-desktop",
+            "bundle_id": "com.docker.docker",
+            "observed_version": "4.80.0"
+        },
+        {
+            "name": "Figma",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "figma",
+            "bundle_id": "com.figma.Desktop",
+            "observed_version": "126.3.12"
+        },
+        {
+            "name": "GitHub Desktop",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "github",
+            "bundle_id": "com.github.GitHubClient",
+            "observed_version": "3.5.8"
+        },
+        {
+            "name": "Google Chrome",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "google-chrome",
+            "bundle_id": "com.google.Chrome",
+            "observed_version": "150.0.7871.129"
+        },
+        {
+            "name": "Google Drive",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "google-drive",
+            "bundle_id": "com.google.drivefs",
+            "observed_version": "128.0"
+        },
+        {
+            "name": "iTerm2",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "iterm2",
+            "bundle_id": "com.googlecode.iterm2",
+            "observed_version": "3.6.11"
+        },
+        {
+            "name": "Logi Options+",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "logi-options+",
+            "bundle_id": "com.logi.optionsplus",
+            "observed_version": "2.5.926888"
+        },
+        {
+            "name": "Microsoft Teams",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "microsoft-teams",
+            "bundle_id": "com.microsoft.teams2",
+            "observed_version": "26183.1901.4874.5228"
+        },
+        {
+            "name": "Notion",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "notion",
+            "bundle_id": "notion.id",
+            "observed_version": "7.26.0"
+        },
+        {
+            "name": "Notion Calendar",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "notion-calendar",
+            "bundle_id": "com.cron.electron",
+            "observed_version": "1.138.0"
+        },
+        {
+            "name": "OBS Studio",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "obs",
+            "bundle_id": "com.obsproject.obs-studio",
+            "observed_version": "32.1.2"
+        },
+        {
+            "name": "Perplexity",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "perplexity",
+            "bundle_id": "ai.perplexity.macv3",
+            "observed_version": "26.27.0"
+        },
+        {
+            "name": "Pieces OS",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "pieces-os",
+            "bundle_id": "com.pieces.os",
+            "observed_version": "12.5.0",
+            "notes": "Pieces desktop app is normally installed or updated through Pieces OS."
+        },
+        {
+            "name": "R",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "r-app",
+            "bundle_id": "org.R-project.R",
+            "observed_version": "4.6.1"
+        },
+        {
+            "name": "RStudio",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "rstudio",
+            "bundle_id": "com.rstudio.desktop",
+            "observed_version": "2026.07.0+139"
+        },
+        {
+            "name": "SonoBus",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "sonobus",
+            "bundle_id": "com.Sonosaurus.SonoBus",
+            "observed_version": "1.7.2"
+        },
+        {
+            "name": "Spotify",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "spotify",
+            "bundle_id": "com.spotify.client",
+            "observed_version": "1.2.92.148"
+        },
+        {
+            "name": "OpenAI Atlas",
+            "type": "app",
+            "method": "manual",
+            "id": "com.openai.atlas",
+            "bundle_id": "com.openai.atlas",
+            "observed_version": "1.2026.189.0"
+        },
+        {
+            "name": "ChatGPT Classic",
+            "type": "app",
+            "method": "manual",
+            "id": "com.openai.chat",
+            "bundle_id": "com.openai.chat",
+            "observed_version": "1.2026.160"
+        },
+        {
+            "name": "ChatGPT",
+            "type": "app",
+            "method": "manual",
+            "id": "com.openai.codex",
+            "bundle_id": "com.openai.codex",
+            "observed_version": "26.715.52143"
+        },
+        {
+            "name": "BOSS TONE STUDIO for RC",
+            "type": "app",
+            "method": "manual",
+            "id": "jp.co.roland.BOSS-TONE-STUDIO-for-RC",
+            "bundle_id": "jp.co.roland.BOSS-TONE-STUDIO-for-RC",
+            "observed_version": "1.5.0"
+        },
+        {
+            "name": "Yamaha DeviceCenter",
+            "type": "app",
+            "method": "manual",
+            "id": "com.yamaha.devicecenter",
+            "bundle_id": "com.yamaha.devicecenter",
+            "observed_version": "1.0.0"
+        },
+        {
+            "name": "EdrawMax",
+            "type": "app",
+            "method": "manual",
+            "id": "com.edrawsoft.edrawmax",
+            "bundle_id": "com.edrawsoft.edrawmax",
+            "observed_version": "15.0.6"
+        },
+        {
+            "name": "Muse Hub",
+            "type": "app",
+            "method": "manual",
+            "id": "com.muse.musehub",
+            "bundle_id": "com.muse.musehub",
+            "observed_version": "2.5.3"
+        },
+        {
+            "name": "Steinberg Download Assistant",
+            "type": "app",
+            "method": "manual",
+            "id": "net.steinberg.elicenser.SteinbergDownloadAssistant",
+            "bundle_id": "net.steinberg.elicenser.SteinbergDownloadAssistant",
+            "observed_version": "1.39.3",
+            "notes": "Use this to restore Steinberg Activation Manager, Library Manager, and License Control Center."
+        },
+        {
+            "name": "Yamaha Steinberg USB Driver and Tools",
+            "type": "driver",
+            "method": "manual",
+            "id": "jp.co.yamaha.YamahaSteinbergUSBControlPanel2",
+            "bundle_id": "jp.co.yamaha.YamahaSteinbergUSBControlPanel2",
+            "observed_version": "3.1.4f1",
+            "notes": "Vendor installer also restores dspMixFx UR-C."
+        },
+        {
+            "name": "Nektar Impact GX/LX+/SE49 Apple support",
+            "type": "driver",
+            "method": "manual",
+            "id": "nektar-impact-apple-support",
+            "notes": "Only an uninstaller was detected; download the current driver/support package from Nektar."
+        }
+    ],
+    "excluded": [
+        {
+            "name": "Authenticator",
+            "reason": "incomplete or placeholder app bundle with no Contents/Info.plist"
+        },
+        {
+            "name": "Tapo",
+            "reason": "incomplete or placeholder app bundle with no Contents/Info.plist"
+        },
+        {
+            "name": "Google Docs, Sheets, and Slides",
+            "reason": "generated Google Drive shortcut apps; restored by Google Drive"
+        },
+        {
+            "name": "Pieces",
+            "reason": "managed by Pieces OS"
+        },
+        {
+            "name": "iTermAI and iTermBrowserPlugin",
+            "reason": "iTerm2 components rather than standalone installations"
+        },
+        {
+            "name": "LogiPluginService and Logi Options+ Driver Installer",
+            "reason": "Logi Options+ components"
+        },
+        {
+            "name": "Steinberg Activation Manager, Library Manager, and License Control Center",
+            "reason": "restored through Steinberg Download Assistant"
+        },
+        {
+            "name": "Uninstall applications",
+            "reason": "uninstallers are not reinstall targets"
+        }
+    ]
+}

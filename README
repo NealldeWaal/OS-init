@@ -1,0 +1,28 @@
+# OS Init
+
+Script for installing macOS applications from the json file. Constant APPS should be used to change the default path.
+
+## Getting Started
+
+```shell
+go run install-apps.go \
+  -file macos-reinstall-apps.json \
+  -dry-run
+```
+
+```shell
+go run install-apps.go \
+  -file macos-reinstall-apps.json \
+  -continue-on-error
+```
+
+## The program
+
+- Handles Homebrew formulae and casks
+- Installs mas when required
+- Installs Mac App Store applications
+- Reports manual/vendor installations
+- Supports -dry-run and -methods
+- Handles interruption signals
+- Continues after failures when requested
+- It compiled successfully, passed go vet, and processed all 66 entries in a dry run. Sign into the Mac App Store before running the real installation.
