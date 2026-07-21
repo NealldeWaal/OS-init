@@ -7,6 +7,7 @@ items. The tool is designed to be idempotent: it checks whether items are
 already installed and skips them when possible.
 
 Features
+
 - Inventory-driven install: specify packages in a JSON file and the tool will process them in order.
 - Supports methods: homebrew_formula, homebrew_cask, mac_app_store, manual
 - Dry-run mode prints commands without executing them
@@ -36,6 +37,7 @@ Example
 
 Create an inventory file (mac-apps.json):
 
+```json
 {
   "schema_version": 1,
   "packages": [
@@ -45,18 +47,23 @@ Create an inventory file (mac-apps.json):
     {"name": "My App (manual)", "method": "manual", "id": "com.example.myapp", "notes": "Download from vendor site"}
   ]
 }
+```
 
 Then run (dry-run first to verify):
 
+```shell
     ./os-init -file mac-apps.json -dry-run
+```
 
 Notes and behavior
+
 - The tool checks for Homebrew and mas and will attempt to install Homebrew (by downloading the official installer script) and mas (via Homebrew) when needed unless running with -dry-run.
 - For mac_app_store entries, the ID must be the numeric MAS app id (mas requires a numeric id). The tool validates this and reports a clear error for non-numeric IDs.
 - The idempotence checks use `brew list --versions` and `mas list` to decide whether to skip an install. These checks are best-effort and require the corresponding tools to be available in PATH.
 - The tool prints skipped/failed items and returns a non-zero status when installs fail (unless -continue-on-error is set).
 
 Contributing
+
 - Run `go test ./...` and `go vet ./...` before submitting changes.
 - Add unit tests for new behavior; shelling out commands may need to be mocked via refactoring.
 

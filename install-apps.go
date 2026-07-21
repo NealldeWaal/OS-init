@@ -8,6 +8,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -17,6 +18,34 @@ import (
 	"syscall"
 	"time"
 )
+
+// Runner abstracts command execution and lookup so it can be mocked in tests.
+// The realRunner wraps the standard os/exec behavior.
+type Runner interface {
+	LookPath(file string) (string, error)
+	OutputContext(ctx context.Context, name string, args ...string) ([]byte, error)
+	RunContext(ctx context.Context, name string, args ...string) error
+}
+
+// realRunner is the production implementation of Runner using exec.CommandContext.
+type realRunner struct{}
+
+func (r realRunner) LookPath(file string) (string, error) { return exec.LookPath(file) }
+func (r realRunner) OutputContext(ctx context.Context, name string, args ...string) ([]byte, error) {
+	cmd := exec.CommandContext(ctx, name, args...)
+	return cmd.Output()
+}
+func (r realRunner) RunContext(ctx context.Context, name string, args ...string) error {
+	cmd := exec.CommandContext(ctx, name, args...)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
+}
+
+// runner is the global command runner used by package functions. Tests may
+// override it with a fake implementation.
+var runner Runner = realRunner{}
 
 // Inventory describes the top-level JSON structure that drives installs.
 // SchemaVersion is used to guard against incompatible inventory versions.
@@ -65,7 +94,7 @@ type options struct {
 }
 
 // APPS is the default path to the JSON inventory file.
-const APPS = "mac-apps.json"
+const APPS = "mac-apps.user.json"
 
 // main parses command-line flags and invokes run with the provided options.
 // Supported flags:
@@ -87,7 +116,7 @@ func main() {
 
 	opt.methods = parseMethods(methodList)
 	if err := run(opt); err != nil {
-		fmt.Fprintln(os.Stderr, "error:", err)
+		log.Printf("error: %v", err)
 		os.Exit(1)
 	}
 }
@@ -114,7 +143,7 @@ func run(opt options) error {
 
 	needsBrew := opt.methods["homebrew_formula"] || opt.methods["homebrew_cask"] || opt.methods["mac_app_store"]
 	if needsBrew {
-		if _, err := exec.LookPath("brew"); err != nil {
+		if _, err := runner.LookPath("brew"); err != nil {
 			fmt.Println("==> Installing Homebrew")
 			// Safer: download the installer script to a temporary file, then execute it
 			tmp := filepath.Join(os.TempDir(), "homebrew-install.sh")
@@ -140,7 +169,7 @@ func run(opt options) error {
 	}
 
 	if opt.methods["mac_app_store"] {
-		if _, err := exec.LookPath("mas"); err != nil {
+		if _, err := runner.LookPath("mas"); err != nil {
 			fmt.Println("==> Installing the Mac App Store CLI (mas)")
 			if err := command(ctx, opt.dryRun, "brew", "install", "mas"); err != nil {
 				return err
@@ -170,7 +199,7 @@ func run(opt options) error {
 		installedFlag, err := installed(ctx, pkg)
 		if err != nil {
 			// If checking installation failed, treat as not installed but report the error
-			fmt.Fprintf(os.Stderr, "WARNING: failed to check installed state for %s: %v\n", pkg.Name, err)
+			log.Printf("WARNING: failed to check installed state for %s: %v", pkg.Name, err)
 		} else if installedFlag {
 			fmt.Printf("SKIPPED: %s is already installed\n", pkg.Name)
 			continue
@@ -182,7 +211,7 @@ func run(opt options) error {
 		}
 		if err := command(ctx, opt.dryRun, name, args...); err != nil {
 			failed++
-			fmt.Fprintf(os.Stderr, "FAILED: %s: %v\n", pkg.Name, err)
+			log.Printf("FAILED: %s: %v", pkg.Name, err)
 			if !opt.continueOnError {
 				return fmt.Errorf("installation stopped after %s failed", pkg.Name)
 			}
@@ -250,11 +279,8 @@ func command(ctx context.Context, dryRun bool, name string, args ...string) erro
 		return nil
 	}
 
-	cmd := exec.CommandContext(ctx, name, args...)
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	return cmd.Run()
+	// Delegate execution to the runner to allow tests to inject a fake runner.
+	return runner.RunContext(ctx, name, args...)
 }
 
 // shellDisplay builds a shell-quoted representation of the command for
@@ -284,7 +310,7 @@ func parseMethods(value string) map[string]bool {
 // requireMacOS verifies the program is running on macOS by checking for the
 // presence of the sw_vers utility in PATH. It returns an error when not on macOS.
 func requireMacOS() error {
-	if _, err := exec.LookPath("sw_vers"); err != nil {
+	if _, err := runner.LookPath("sw_vers"); err != nil {
 		return errors.New("this installer must run on macOS")
 	}
 	return nil
@@ -300,8 +326,7 @@ func installed(parentCtx context.Context, pkg Package) (bool, error) {
 
 	switch pkg.Method {
 	case "homebrew_formula":
-		cmd := exec.CommandContext(ctx, "brew", "list", "--versions", pkg.ID)
-		out, err := cmd.Output()
+		out, err := runner.OutputContext(ctx, "brew", "list", "--versions", pkg.ID)
 		if err != nil {
 			// If command exited non-zero but produced no output, treat as not installed
 			if ee, ok := err.(*exec.ExitError); ok && len(ee.Stderr) == 0 && len(bytes.TrimSpace(out)) == 0 {
@@ -318,8 +343,7 @@ func installed(parentCtx context.Context, pkg Package) (bool, error) {
 		}
 		return true, nil
 	case "homebrew_cask":
-		cmd := exec.CommandContext(ctx, "brew", "list", "--cask", "--versions", pkg.ID)
-		out, err := cmd.Output()
+		out, err := runner.OutputContext(ctx, "brew", "list", "--cask", "--versions", pkg.ID)
 		if err != nil {
 			if ee, ok := err.(*exec.ExitError); ok && len(ee.Stderr) == 0 && len(bytes.TrimSpace(out)) == 0 {
 				return false, nil
@@ -335,11 +359,10 @@ func installed(parentCtx context.Context, pkg Package) (bool, error) {
 		return true, nil
 	case "mac_app_store":
 		// Check mas presence first
-		if _, err := exec.LookPath("mas"); err != nil {
+		if _, err := runner.LookPath("mas"); err != nil {
 			return false, nil
 		}
-		cmd := exec.CommandContext(ctx, "mas", "list")
-		out, err := cmd.Output()
+		out, err := runner.OutputContext(ctx, "mas", "list")
 		if err != nil {
 			// If mas list failed, assume not installed rather than erroring the run
 			return false, nil

@@ -1,5 +1,6 @@
-.DS_Store
+*.user.*
 
+.DS_Store
 .history/
 logs/
 .vscode/
