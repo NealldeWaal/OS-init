@@ -3,5 +3,8 @@
 .DS_Store
 .history/
 logs/
-.vscode/
+.vscode/*
 !.vscode/tasks.json
+
+# Local build output
+/OS-Init

@@ -94,7 +94,7 @@ type options struct {
 }
 
 // APPS is the default path to the JSON inventory file.
-const APPS = "mac-apps.user.json"
+const APPS = "mac-apps.json"
 
 // main parses command-line flags and invokes run with the provided options.
 // Supported flags:

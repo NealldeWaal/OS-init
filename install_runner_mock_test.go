@@ -42,6 +42,9 @@ func (f *fakeRunner) RunContext(ctx context.Context, name string, args ...string
 }
 
 func TestInstalled_HomebrewFormula(t *testing.T) {
+	origRunner := runner
+	t.Cleanup(func() { runner = origRunner })
+
 	fr := &fakeRunner{
 		lookPaths: map[string]error{"brew": nil},
 		outputs:   map[string][]byte{"brew|list|--versions|jq": []byte("jq 1.6")},
@@ -59,6 +62,9 @@ func TestInstalled_HomebrewFormula(t *testing.T) {
 }
 
 func TestInstalled_HomebrewFormula_NotInstalled(t *testing.T) {
+	origRunner := runner
+	t.Cleanup(func() { runner = origRunner })
+
 	fr := &fakeRunner{
 		lookPaths: map[string]error{"brew": nil},
 		outputs:   map[string][]byte{},
@@ -76,6 +82,9 @@ func TestInstalled_HomebrewFormula_NotInstalled(t *testing.T) {
 }
 
 func TestInstalled_Mas(t *testing.T) {
+	origRunner := runner
+	t.Cleanup(func() { runner = origRunner })
+
 	fr := &fakeRunner{
 		lookPaths: map[string]error{"mas": nil},
 		outputs:   map[string][]byte{"mas|list": []byte("497799835 Xcode (11.3)\n")},
@@ -93,6 +102,9 @@ func TestInstalled_Mas(t *testing.T) {
 }
 
 func TestInstalled_Mas_NotInstalled(t *testing.T) {
+	origRunner := runner
+	t.Cleanup(func() { runner = origRunner })
+
 	fr := &fakeRunner{
 		lookPaths: map[string]error{"mas": nil},
 		outputs:   map[string][]byte{"mas|list": []byte("")},

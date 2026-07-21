@@ -5,6 +5,20 @@ import (
 	"testing"
 )
 
+func TestDefaultInventory(t *testing.T) {
+	if APPS != "mac-apps.json" {
+		t.Fatalf("expected default inventory %q, got %q", "mac-apps.json", APPS)
+	}
+
+	inv, err := readInventory(APPS)
+	if err != nil {
+		t.Fatalf("read default inventory: %v", err)
+	}
+	if inv.SchemaVersion != 1 {
+		t.Fatalf("expected schema version 1, got %d", inv.SchemaVersion)
+	}
+}
+
 func TestInstallCommand_MASNumeric(t *testing.T) {
 	pkg := Package{Name: "Test MAS", Method: "mac_app_store", ID: "123456"}
 	name, args, err := installCommand(pkg)

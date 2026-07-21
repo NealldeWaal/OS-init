@@ -5,31 +5,31 @@
       "label": "Install Go module dependencies",
       "type": "shell",
       "command": "go mod download",
-      "presentation": { "reveal": "silent" },
+      "presentation": {
+        "reveal": "silent"
+      },
       "inAgents": true,
-      "runOptions": { "runOn": "worktreeCreated" }
+      "runOptions": {
+        "runOn": "worktreeCreated"
+      }
     },
     {
       "label": "Run unit tests",
       "type": "shell",
       "command": "go test ./...",
-      "presentation": { "reveal": "always" },
+      "presentation": {
+        "reveal": "always"
+      },
       "problemMatcher": [],
       "inAgents": true
     },
     {
       "label": "Check gofmt",
       "type": "shell",
-      "command": "gofmt -l .",
-      "presentation": { "reveal": "silent" },
-      "problemMatcher": [],
-      "inAgents": true
-    },
-    {
-      "label": "Build binary",
-      "type": "shell",
-      "command": "go build -v -o bin/install-apps ./",
-      "presentation": { "reveal": "always" },
+      "command": "gofmt -l *.go",
+      "presentation": {
+        "reveal": "silent"
+      },
       "problemMatcher": [],
       "inAgents": true
     }
