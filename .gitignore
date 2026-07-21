@@ -4,3 +4,4 @@
 .history/
 logs/
 .vscode/
+!.vscode/tasks.json
