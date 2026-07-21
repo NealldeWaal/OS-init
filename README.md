@@ -36,6 +36,7 @@ Example
 
 Create an inventory file (mac-apps.json):
 
+```JSON
 {
   "schema_version": 1,
   "packages": [
@@ -45,6 +46,7 @@ Create an inventory file (mac-apps.json):
     {"name": "My App (manual)", "method": "manual", "id": "com.example.myapp", "notes": "Download from vendor site"}
   ]
 }
+```
 
 Then run (dry-run first to verify):
 
