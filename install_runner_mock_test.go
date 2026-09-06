@@ -120,3 +120,72 @@ func TestInstalled_Mas_NotInstalled(t *testing.T) {
 		t.Fatalf("expected installed=false for mas")
 	}
 }
+
+// setAppIndex pre-seeds the bundle identifier index so tests exercise the
+// on-disk fallback without touching the real /Applications directory.
+func setAppIndex(t *testing.T, index map[string]appInfo) {
+	t.Helper()
+	orig := appIndex
+	appIndex = index
+	t.Cleanup(func() { appIndex = orig })
+}
+
+func TestInstalled_HomebrewCask_UnmanagedApp(t *testing.T) {
+	origRunner := runner
+	t.Cleanup(func() { runner = origRunner })
+
+	// brew has no record of the cask, but the app is on disk.
+	runner = &fakeRunner{lookPaths: map[string]error{"brew": nil}, outputs: map[string][]byte{}}
+	setAppIndex(t, map[string]appInfo{"com.figma.Desktop": {path: "/Applications/Figma.app", version: "126.8.18"}})
+
+	pkg := Package{Name: "Figma", Method: "homebrew_cask", ID: "figma", BundleID: "com.figma.Desktop"}
+	ok, err := installed(context.Background(), pkg)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if !ok {
+		t.Fatalf("expected installed=true for an app present outside Homebrew")
+	}
+}
+
+func TestInstalled_HomebrewCask_NotInstalled(t *testing.T) {
+	origRunner := runner
+	t.Cleanup(func() { runner = origRunner })
+
+	runner = &fakeRunner{lookPaths: map[string]error{"brew": nil}, outputs: map[string][]byte{}}
+	setAppIndex(t, map[string]appInfo{})
+
+	pkg := Package{Name: "Discord", Method: "homebrew_cask", ID: "discord", BundleID: "com.hnc.Discord"}
+	ok, err := installed(context.Background(), pkg)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if ok {
+		t.Fatalf("expected installed=false when neither brew nor the filesystem knows the cask")
+	}
+}
+
+func TestInstalled_Mas_FallsBackToBundleWhenMasMissing(t *testing.T) {
+	origRunner := runner
+	t.Cleanup(func() { runner = origRunner })
+
+	runner = &fakeRunner{lookPaths: map[string]error{"mas": errors.New("not found")}}
+	setAppIndex(t, map[string]appInfo{"com.microsoft.Word": {path: "/Applications/Microsoft Word.app", version: "16.112.3"}})
+
+	pkg := Package{Name: "Microsoft Word", Method: "mac_app_store", ID: "462054704", BundleID: "com.microsoft.Word"}
+	ok, err := installed(context.Background(), pkg)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if !ok {
+		t.Fatalf("expected installed=true from the bundle fallback when mas is unavailable")
+	}
+}
+
+func TestAppPath_EmptyBundleIDNeverMatches(t *testing.T) {
+	setAppIndex(t, map[string]appInfo{"": {path: "/Applications/Bogus.app"}})
+
+	if _, ok := appPath(context.Background(), ""); ok {
+		t.Fatalf("expected an empty bundle identifier to never match")
+	}
+}

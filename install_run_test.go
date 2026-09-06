@@ -11,7 +11,7 @@ import (
 
 func writeInventory(t *testing.T, dir string, pkg Package) string {
 	t.Helper()
-	inv := Inventory{SchemaVersion: 1, Packages: []Package{pkg}}
+	inv := Inventory{SchemaVersion: schemaVersion, Packages: []Package{pkg}}
 	b, err := json.Marshal(inv)
 	if err != nil {
 		t.Fatalf("marshal inventory: %v", err)
