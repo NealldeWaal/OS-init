@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    # macOS, not Linux: requireMacOS rejects other platforms, so run() and every
+    # test that exercises it would fail elsewhere.
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: gofmt
+        run: |
+          unformatted=$(gofmt -l .)
+          if [ -n "$unformatted" ]; then
+            echo "not gofmt'd:"; echo "$unformatted"; exit 1
+          fi
+
+      - name: go vet
+        run: go vet ./...
+
+      # Covers the inventory too: readInventory validates it, so a malformed
+      # mac-apps.json fails here rather than partway through someone's install.
+      - name: go test
+        run: go test ./... -count=1
+
+      - name: dry run
+        run: go run . -dry-run -methods manual -quiet

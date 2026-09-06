@@ -1,26 +1,7 @@
 {
-    "schema_version": 1,
-    "generated_at": "2026-07-21T00:00:00+02:00",
+    "schema_version": 2,
+    "generated_at": "2026-09-06T00:00:00+02:00",
     "source": "local macOS application and package-manager inventory",
-    "bootstrap": [
-        {
-            "name": "Homebrew",
-            "check": "brew --version",
-            "notes": "Install Homebrew before processing Homebrew packages."
-        },
-        {
-            "name": "mas",
-            "check": "mas version",
-            "install": "brew install mas",
-            "notes": "Required before processing Mac App Store packages; sign in to the App Store first."
-        }
-    ],
-    "installers": {
-        "homebrew_formula": "brew install <id>",
-        "homebrew_cask": "brew install --cask <id>",
-        "mac_app_store": "mas install <id>",
-        "manual": null
-    },
     "packages": [
         {
             "name": "bitwarden-cli",
@@ -32,37 +13,104 @@
             "name": "GnuPG",
             "type": "cli",
             "method": "homebrew_formula",
-            "id": "gnupg"
+            "id": "gnupg",
+            "observed_version": "2.5.21"
         },
         {
             "name": "Go",
             "type": "cli",
             "method": "homebrew_formula",
-            "id": "go"
+            "id": "go",
+            "observed_version": "1.26.6"
         },
         {
             "name": "htop",
             "type": "cli",
             "method": "homebrew_formula",
-            "id": "htop"
+            "id": "htop",
+            "observed_version": "3.5.3"
         },
         {
             "name": "pinentry-mac",
             "type": "cli",
             "method": "homebrew_formula",
-            "id": "pinentry-mac"
+            "id": "pinentry-mac",
+            "observed_version": "1.3.1.1"
         },
         {
             "name": "pipx",
             "type": "cli",
             "method": "homebrew_formula",
-            "id": "pipx"
+            "id": "pipx",
+            "observed_version": "1.16.7"
         },
         {
-            "name": "BlackHole 16ch",
+            "name": "ffmpeg",
+            "type": "cli",
+            "method": "homebrew_formula",
+            "id": "ffmpeg",
+            "observed_version": "9.0.1_1"
+        },
+        {
+            "name": "GitHub CLI",
+            "type": "cli",
+            "method": "homebrew_formula",
+            "id": "gh",
+            "observed_version": "2.100.0"
+        },
+        {
+            "name": "neo4j-mcp",
+            "type": "cli",
+            "method": "homebrew_formula",
+            "id": "neo4j-mcp",
+            "observed_version": "1.5.3",
+            "notes": "Neo4j Model Context Protocol server."
+        },
+        {
+            "name": "Node.js",
+            "type": "cli",
+            "method": "homebrew_formula",
+            "id": "node",
+            "observed_version": "26.7.0"
+        },
+        {
+            "name": "ripgrep",
+            "type": "cli",
+            "method": "homebrew_formula",
+            "id": "ripgrep",
+            "observed_version": "15.2.0"
+        },
+        {
+            "name": "Rust",
+            "type": "cli",
+            "method": "homebrew_formula",
+            "id": "rust",
+            "observed_version": "1.98.0"
+        },
+        {
+            "name": "rustup",
+            "type": "cli",
+            "method": "homebrew_formula",
+            "id": "rustup",
+            "observed_version": "1.29.1",
+            "notes": "Installed alongside the rust formula; drop one of the two if the toolchains conflict."
+        },
+        {
+            "name": "Sunshine",
+            "type": "app",
+            "method": "homebrew_formula",
+            "id": "lizardbyte/homebrew/sunshine",
+            "bundle_id": "dev.lizardbyte.app.Sunshine",
+            "observed_version": "2026.516.143833_2",
+            "notes": "Lives in the lizardbyte/homebrew tap; brew taps it automatically. Host counterpart to Moonlight."
+        },
+        {
+            "name": "BlackHole 2ch",
             "type": "driver",
             "method": "homebrew_cask",
-            "id": "blackhole-16ch"
+            "id": "blackhole-2ch",
+            "observed_version": "0.7.1",
+            "notes": "Virtual audio driver. The 16ch build is a separate cask (blackhole-16ch) and is not used here."
         },
         {
             "name": "Data Jar",
@@ -78,7 +126,7 @@
             "method": "mac_app_store",
             "id": "1352778147",
             "bundle_id": "com.bitwarden.desktop",
-            "observed_version": "2026.6.1"
+            "observed_version": "2026.8.0"
         },
         {
             "name": "Boop",
@@ -102,7 +150,7 @@
             "method": "mac_app_store",
             "id": "634148309",
             "bundle_id": "com.apple.logic10",
-            "observed_version": "12.3"
+            "observed_version": "12.3.1"
         },
         {
             "name": "Metronome",
@@ -118,7 +166,7 @@
             "method": "mac_app_store",
             "id": "462058435",
             "bundle_id": "com.microsoft.Excel",
-            "observed_version": "16.111"
+            "observed_version": "16.112.3"
         },
         {
             "name": "Microsoft OneNote",
@@ -134,7 +182,7 @@
             "method": "mac_app_store",
             "id": "985367838",
             "bundle_id": "com.microsoft.Outlook",
-            "observed_version": "16.111"
+            "observed_version": "16.112.3"
         },
         {
             "name": "Microsoft PowerPoint",
@@ -158,7 +206,7 @@
             "method": "mac_app_store",
             "id": "462054704",
             "bundle_id": "com.microsoft.Word",
-            "observed_version": "16.111"
+            "observed_version": "16.112.3"
         },
         {
             "name": "OneDrive",
@@ -166,7 +214,7 @@
             "method": "mac_app_store",
             "id": "823766827",
             "bundle_id": "com.microsoft.OneDrive-mac",
-            "observed_version": "26.113.0614"
+            "observed_version": "26.145.0728"
         },
         {
             "name": "Slack",
@@ -182,7 +230,7 @@
             "method": "mac_app_store",
             "id": "1291898086",
             "bundle_id": "com.toggl.daneel",
-            "observed_version": "10.16.1"
+            "observed_version": "10.17.0"
         },
         {
             "name": "Trello",
@@ -190,7 +238,7 @@
             "method": "mac_app_store",
             "id": "1278508951",
             "bundle_id": "com.atlassian.trello",
-            "observed_version": "2.16.3"
+            "observed_version": "2.16.7"
         },
         {
             "name": "Magnet",
@@ -206,7 +254,7 @@
             "method": "mac_app_store",
             "id": "310633997",
             "bundle_id": "net.whatsapp.WhatsApp",
-            "observed_version": "26.27.74"
+            "observed_version": "26.34.74"
         },
         {
             "name": "Xcode",
@@ -225,6 +273,47 @@
             "observed_version": "7.4.1"
         },
         {
+            "name": "Actions",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "1586435171",
+            "bundle_id": "com.sindresorhus.Actions",
+            "observed_version": "4.2.1"
+        },
+        {
+            "name": "Momentum",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "1564329434",
+            "bundle_id": "com.momentumdash.momentum",
+            "observed_version": "2.27.4"
+        },
+        {
+            "name": "Tailscale",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "1475387142",
+            "bundle_id": "io.tailscale.ipn.macos",
+            "observed_version": "1.102.3",
+            "notes": "Also available as the tailscale Homebrew cask if the App Store build is not wanted."
+        },
+        {
+            "name": "Velja",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "1607635845",
+            "bundle_id": "com.sindresorhus.Velja",
+            "observed_version": "3.2.3"
+        },
+        {
+            "name": "Widgetify",
+            "type": "app",
+            "method": "mac_app_store",
+            "id": "6479962405",
+            "bundle_id": "com.jian.Widgetify",
+            "observed_version": "4.37"
+        },
+        {
             "name": "Discord",
             "type": "app",
             "method": "homebrew_cask",
@@ -238,7 +327,8 @@
             "method": "homebrew_cask",
             "id": "docker-desktop",
             "bundle_id": "com.docker.docker",
-            "observed_version": "4.80.0"
+            "observed_version": "4.87.0",
+            "notes": "Provides the docker CLI; the standalone docker formula is deliberately not used."
         },
         {
             "name": "Figma",
@@ -246,7 +336,7 @@
             "method": "homebrew_cask",
             "id": "figma",
             "bundle_id": "com.figma.Desktop",
-            "observed_version": "126.3.12"
+            "observed_version": "126.8.18"
         },
         {
             "name": "GitHub Desktop",
@@ -254,7 +344,7 @@
             "method": "homebrew_cask",
             "id": "github",
             "bundle_id": "com.github.GitHubClient",
-            "observed_version": "3.5.8"
+            "observed_version": "3.6.3"
         },
         {
             "name": "Google Chrome",
@@ -262,7 +352,7 @@
             "method": "homebrew_cask",
             "id": "google-chrome",
             "bundle_id": "com.google.Chrome",
-            "observed_version": "150.0.7871.129"
+            "observed_version": "152.0.7977.76"
         },
         {
             "name": "Google Drive",
@@ -270,7 +360,7 @@
             "method": "homebrew_cask",
             "id": "google-drive",
             "bundle_id": "com.google.drivefs",
-            "observed_version": "128.0"
+            "observed_version": "130.0"
         },
         {
             "name": "iTerm2",
@@ -286,7 +376,7 @@
             "method": "homebrew_cask",
             "id": "logi-options+",
             "bundle_id": "com.logi.optionsplus",
-            "observed_version": "2.5.926888"
+            "observed_version": "2.7.961922"
         },
         {
             "name": "Microsoft Teams",
@@ -294,7 +384,7 @@
             "method": "homebrew_cask",
             "id": "microsoft-teams",
             "bundle_id": "com.microsoft.teams2",
-            "observed_version": "26183.1901.4874.5228"
+            "observed_version": "26213.1006.5011.1671"
         },
         {
             "name": "Notion",
@@ -302,7 +392,7 @@
             "method": "homebrew_cask",
             "id": "notion",
             "bundle_id": "notion.id",
-            "observed_version": "7.26.0"
+            "observed_version": "7.32.0"
         },
         {
             "name": "Notion Calendar",
@@ -310,7 +400,7 @@
             "method": "homebrew_cask",
             "id": "notion-calendar",
             "bundle_id": "com.cron.electron",
-            "observed_version": "1.138.0"
+            "observed_version": "1.139.0"
         },
         {
             "name": "OBS Studio",
@@ -326,7 +416,7 @@
             "method": "homebrew_cask",
             "id": "perplexity",
             "bundle_id": "ai.perplexity.macv3",
-            "observed_version": "26.27.0"
+            "observed_version": "26.34.0"
         },
         {
             "name": "Pieces OS",
@@ -334,7 +424,7 @@
             "method": "homebrew_cask",
             "id": "pieces-os",
             "bundle_id": "com.pieces.os",
-            "observed_version": "12.5.0",
+            "observed_version": "12.6.2",
             "notes": "Pieces desktop app is normally installed or updated through Pieces OS."
         },
         {
@@ -343,7 +433,8 @@
             "method": "homebrew_cask",
             "id": "r-app",
             "bundle_id": "org.R-project.R",
-            "observed_version": "4.6.1"
+            "observed_version": "4.6.1",
+            "notes": "Version read by hand: the bundle reports a descriptive string, not a version number."
         },
         {
             "name": "RStudio",
@@ -351,7 +442,7 @@
             "method": "homebrew_cask",
             "id": "rstudio",
             "bundle_id": "com.rstudio.desktop",
-            "observed_version": "2026.07.0+139"
+            "observed_version": "2026.08.0-daily+90"
         },
         {
             "name": "SonoBus",
@@ -367,7 +458,103 @@
             "method": "homebrew_cask",
             "id": "spotify",
             "bundle_id": "com.spotify.client",
-            "observed_version": "1.2.92.148"
+            "observed_version": "1.2.98.301"
+        },
+        {
+            "name": "AudioRelay",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "audiorelay",
+            "bundle_id": "com.azefsw.audioconnect",
+            "observed_version": "0.27.5"
+        },
+        {
+            "name": "Claude",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "claude",
+            "bundle_id": "com.anthropic.claudefordesktop",
+            "observed_version": "1.46388.4"
+        },
+        {
+            "name": "draw.io",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "drawio",
+            "bundle_id": "com.jgraph.drawio.desktop",
+            "observed_version": "31.3.2"
+        },
+        {
+            "name": "Gemini",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "google-gemini",
+            "bundle_id": "com.google.GeminiMacOS",
+            "observed_version": "1.107.3.828",
+            "notes": "Use google-gemini; the gemini cask is an unrelated disk cleaner."
+        },
+        {
+            "name": "Gephi",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "gephi",
+            "bundle_id": "org.gephi",
+            "observed_version": "0.11.2"
+        },
+        {
+            "name": "LTspice",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "ltspice",
+            "bundle_id": "com.analog.ltspice",
+            "observed_version": "26.0.2.1"
+        },
+        {
+            "name": "Moonlight",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "moonlight",
+            "bundle_id": "com.moonlight-stream.Moonlight",
+            "observed_version": "6.1.0"
+        },
+        {
+            "name": "Neo4j Desktop",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "neo4j-desktop",
+            "bundle_id": "com.neo4j.neo4j-desktop-2",
+            "observed_version": "2.2.1"
+        },
+        {
+            "name": "ngrok",
+            "type": "cli",
+            "method": "homebrew_cask",
+            "id": "ngrok",
+            "observed_version": "3.39.11,dy27whJwwmb,a"
+        },
+        {
+            "name": "Obsidian",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "obsidian",
+            "bundle_id": "md.obsidian",
+            "observed_version": "1.12.7"
+        },
+        {
+            "name": "Visual Studio Code",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "visual-studio-code",
+            "bundle_id": "com.microsoft.VSCode",
+            "observed_version": "1.136.1"
+        },
+        {
+            "name": "Wispr Flow",
+            "type": "app",
+            "method": "homebrew_cask",
+            "id": "wispr-flow",
+            "bundle_id": "com.electron.wispr-flow",
+            "observed_version": "1.6.765"
         },
         {
             "name": "OpenAI Atlas",
@@ -391,7 +578,7 @@
             "method": "manual",
             "id": "com.openai.codex",
             "bundle_id": "com.openai.codex",
-            "observed_version": "26.715.52143"
+            "observed_version": "26.825.31414"
         },
         {
             "name": "BOSS TONE STUDIO for RC",
@@ -449,6 +636,24 @@
             "method": "manual",
             "id": "nektar-impact-apple-support",
             "notes": "Only an uninstaller was detected; download the current driver/support package from Nektar."
+        },
+        {
+            "name": "Any Display",
+            "type": "app",
+            "method": "manual",
+            "id": "com.fullstackhub.anydisplay",
+            "bundle_id": "com.fullstackhub.anydisplay",
+            "observed_version": "1.2.1",
+            "notes": "No Homebrew cask or App Store listing; download from the vendor."
+        },
+        {
+            "name": "Widgetter",
+            "type": "app",
+            "method": "manual",
+            "id": "com.villow.wgt",
+            "bundle_id": "com.villow.wgt",
+            "observed_version": "2.5.1W",
+            "notes": "No Homebrew cask; installed outside the App Store."
         }
     ],
     "excluded": [
@@ -462,19 +667,34 @@
         },
         {
             "name": "Google Docs, Sheets, and Slides",
-            "reason": "generated Google Drive shortcut apps; restored by Google Drive"
+            "reason": "generated Google Drive shortcut apps; restored by Google Drive",
+            "bundle_ids": [
+                "com.google.drivefs.shortcuts.docs",
+                "com.google.drivefs.shortcuts.sheets",
+                "com.google.drivefs.shortcuts.slides"
+            ]
         },
         {
             "name": "Pieces",
-            "reason": "managed by Pieces OS"
+            "reason": "managed by Pieces OS",
+            "bundle_ids": [
+                "com.pieces.x"
+            ]
         },
         {
             "name": "iTermAI and iTermBrowserPlugin",
-            "reason": "iTerm2 components rather than standalone installations"
+            "reason": "iTerm2 components rather than standalone installations",
+            "bundle_ids": [
+                "com.googlecode.iterm2.iTermAI",
+                "com.googlecode.iterm2.iTermBrowserPlugin"
+            ]
         },
         {
             "name": "LogiPluginService and Logi Options+ Driver Installer",
-            "reason": "Logi Options+ components"
+            "reason": "Logi Options+ components",
+            "bundle_ids": [
+                "com.logi.pluginservice"
+            ]
         },
         {
             "name": "Steinberg Activation Manager, Library Manager, and License Control Center",
@@ -483,6 +703,27 @@
         {
             "name": "Uninstall applications",
             "reason": "uninstallers are not reinstall targets"
+        },
+        {
+            "name": "Claude Code URL Handler",
+            "reason": "helper bundle installed by the Claude Code CLI",
+            "bundle_ids": [
+                "com.anthropic.claude-code-url-handler"
+            ]
+        },
+        {
+            "name": "Safari",
+            "reason": "ships with macOS",
+            "bundle_ids": [
+                "com.apple.Safari"
+            ]
+        },
+        {
+            "name": "docker (formula)",
+            "reason": "the docker CLI comes from the Docker Desktop cask",
+            "ids": [
+                "docker"
+            ]
         }
     ]
 }

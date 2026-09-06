@@ -14,8 +14,8 @@ func TestDefaultInventory(t *testing.T) {
 	if err != nil {
 		t.Fatalf("read default inventory: %v", err)
 	}
-	if inv.SchemaVersion != 1 {
-		t.Fatalf("expected schema version 1, got %d", inv.SchemaVersion)
+	if inv.SchemaVersion != schemaVersion {
+		t.Fatalf("expected schema version %d, got %d", schemaVersion, inv.SchemaVersion)
 	}
 }
 
